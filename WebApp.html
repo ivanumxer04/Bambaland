@@ -17,11 +17,66 @@
   <body>    <!-- cos -->
     <div id="superior">    <!-- franja superior per mostar el nom de la webapp -->
         Bambaland
-  </div>
-  <div id="seccio_1">   <!-- espai central per mostrar contingut -->
-    Nike
-  </div>
-  <div id="menu">    <!-- franja inferior per al menú de navegació -->
-  </div>
+        
+      <!-- Menu de navegació -->
+      <div id="menu">
+        <button onclick="showSection('seccio_1')">Nike</button>
+        <button onclick="showSection('seccio_2')">Adidas</button>
+        <button onclick="showSection('seccio_3')">Puma</button>
+        <button onclick="showSection('seccio_4')">New Balance</button>
+    </div>
+
+      <!-- Secció Nike -->
+      <div id="seccio_1" class="section active">
+        <h2>Nike</h2>
+        <div class="gallery">
+            <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/b7d9211c-26e7-431a-ac24-b0540fb3c00f/AIR+FORCE+1+%2707.png" alt="Air Force 1">
+            <img src="https://via.placeholder.com/200x150?text=Nike+2" alt="Nike 2">
+            <img src="https://via.placeholder.com/200x150?text=Nike+3" alt="Nike 3">
+        </div>
+    </div>
+
+    <!-- Secció Adidas -->
+    <div id="seccio_2" class="section">
+        <h2>Adidas</h2>
+        <div class="gallery">
+            <img src="https://via.placeholder.com/200x150?text=Adidas+1" alt="Adidas 1">
+            <img src="https://via.placeholder.com/200x150?text=Adidas+2" alt="Adidas 2">
+            <img src="https://via.placeholder.com/200x150?text=Adidas+3" alt="Adidas 3">
+        </div>
+    </div>
+
+    <!-- Secció Puma -->
+    <div id="seccio_3" class="section">
+        <h2>Puma</h2>
+        <div class="gallery">
+            <img src="https://via.placeholder.com/200x150?text=Puma+1" alt="Puma 1">
+            <img src="https://via.placeholder.com/200x150?text=Puma+2" alt="Puma 2">
+            <img src="https://via.placeholder.com/200x150?text=Puma+3" alt="Puma 3">
+        </div>
+    </div>
+
+    <!-- Secció New Balance -->
+    <div id="seccio_4" class="section">
+        <h2>New Balance</h2>
+        <div class="gallery">
+            <img src="https://via.placeholder.com/200x150?text=NB+1" alt="NB 1">
+            <img src="https://via.placeholder.com/200x150?text=NB+2" alt="NB 2">
+            <img src="https://via.placeholder.com/200x150?text=NB+3" alt="NB 3">
+        </div>
+    </div>
+
+    <!-- Script per mostrar i ocultar seccions -->
+    <script>
+      function showSection(id) {
+        // Ocultar totes les seccions
+        document.querySelectorAll('.section').forEach(s => {
+            s.classList.remove('active');
+        });
+
+        // Mostrar la secció seleccionada
+        document.getElementById(id).classList.add('active');
+      }
+    </script>
   </body>
 </html>

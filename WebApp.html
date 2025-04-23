@@ -8,8 +8,56 @@
           Bambaland
       </title>
       <style>
-        #fragment {
-            width:100%;
+ body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        #superior {
+            text-align: center;
+            font-size: 2em;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        #menu {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #menu button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
     </style> 
     <link rel="stylesheet" href="index.css 2.0.css">
@@ -17,7 +65,7 @@
   <body>    <!-- cos -->
     <div id="superior">    <!-- franja superior per mostar el nom de la webapp -->
         Bambaland
-        
+
       <!-- Menu de navegació -->
       <div id="menu">
         <button onclick="showSection('seccio_1')">Nike</button>

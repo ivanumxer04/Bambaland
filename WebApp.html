@@ -1,130 +1,105 @@
-<!DOCTYPE html>    <!-- tipus de document (HTML) -->  
-<html lang="ca">    <!-- contingut -->
-  <head>    <!-- capçalera -->
-      <meta charset="UTF-8">    <!-- codificació del text (UTF-8) -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">    <!-- adapta la visualització a les mides de la pantalla -->
-      <meta name="description" content="Descripció de la nostra webapp.">    <!-- breu descripció per als cercadors -->
-      <title>    <!-- títol que es visualitza en la part superior del navegador -->
-          Bambaland
-      </title>
-      <style>
- body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      margin: 0;
+      background-color: #f9dcdc;
+      font-family: sans-serif;
+    }
 
-        #superior {
-            text-align: center;
-            font-size: 2em;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
+    .header {
+      background-color: #971018;
+      color: white;
+      padding: 20px;
+      font-size: 30px;
+    }
 
-        #menu {
-            margin-top: 30px;
-            text-align: center;
-        }
+    .brand-buttons {
+      margin: 20px;
+      display: flex;
+      gap: 10px;
+    }
 
-        #menu button {
-            padding: 10px 15px;
-            margin: 5px;
-            background-color: #000;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .brand-buttons button {
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-        .section {
-            display: none;
-        }
+    .brand-sections {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+    }
 
-        .active {
-            display: block;
-        }
+    .brand {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fce6e6;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px #ccc;
+    }
 
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-        }
+    .brand img {
+      width: 200px;
+      margin-bottom: 10px;
+    }
 
-        .gallery img {
-            width: 200px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-    </style> 
-    <link rel="stylesheet" href="index.css 2.0.css">
-  </head>
-  <body>    <!-- cos -->
-    <div id="superior">    <!-- franja superior per mostar el nom de la webapp -->
-        Bambaland
+    .visible {
+      display: flex !important;
+    }
+  </style>
+</head>
+<body>
 
-      <!-- Menu de navegació -->
-      <div id="menu">
-        <button onclick="showSection('seccio_1')">Nike</button>
-        <button onclick="showSection('seccio_2')">Adidas</button>
-        <button onclick="showSection('seccio_3')">Puma</button>
-        <button onclick="showSection('seccio_4')">New Balance</button>
+  <div class="header">Bambaland</div>
+
+  <div class="brand-buttons">
+    <button onclick="showBrand('nike')">Nike</button>
+    <button onclick="showBrand('adidas')">Adidas</button>
+    <button onclick="showBrand('puma')">Puma</button>
+    <button onclick="showBrand('nb')">New Balance</button>
+  </div>
+
+  <div class="brand-sections">
+    <div id="nike" class="brand">
+      <img src="nike1.jpg" alt="Nike 1">
+      <div>Nike 1</div>
+      <img src="nike2.jpg" alt="Nike 2">
+      <div>Nike 2</div>
     </div>
 
-      <!-- Secció Nike -->
-      <div id="seccio_1" class="section active">
-        <h2>Nike</h2>
-        <div class="gallery">
-            <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/b7d9211c-26e7-431a-ac24-b0540fb3c00f/AIR+FORCE+1+%2707.png" alt="Air Force 1">
-            <img src="https://via.placeholder.com/200x150?text=Nike+2" alt="Nike 2">
-            <img src="https://via.placeholder.com/200x150?text=Nike+3" alt="Nike 3">
-        </div>
+    <div id="adidas" class="brand">
+      <img src="adidas1.jpg" alt="Adidas 1">
+      <div>Adidas 1</div>
     </div>
 
-    <!-- Secció Adidas -->
-    <div id="seccio_2" class="section">
-        <h2>Adidas</h2>
-        <div class="gallery">
-            <img src="https://via.placeholder.com/200x150?text=Adidas+1" alt="Adidas 1">
-            <img src="https://via.placeholder.com/200x150?text=Adidas+2" alt="Adidas 2">
-            <img src="https://via.placeholder.com/200x150?text=Adidas+3" alt="Adidas 3">
-        </div>
+    <div id="puma" class="brand">
+      <img src="puma1.jpg" alt="Puma 1">
+      <div>Puma 1</div>
     </div>
 
-    <!-- Secció Puma -->
-    <div id="seccio_3" class="section">
-        <h2>Puma</h2>
-        <div class="gallery">
-            <img src="https://via.placeholder.com/200x150?text=Puma+1" alt="Puma 1">
-            <img src="https://via.placeholder.com/200x150?text=Puma+2" alt="Puma 2">
-            <img src="https://via.placeholder.com/200x150?text=Puma+3" alt="Puma 3">
-        </div>
+    <div id="nb" class="brand">
+      <img src="nb1.jpg" alt="NB 1">
+      <div>NB 1</div>
     </div>
+  </div>
 
-    <!-- Secció New Balance -->
-    <div id="seccio_4" class="section">
-        <h2>New Balance</h2>
-        <div class="gallery">
-            <img src="https://via.placeholder.com/200x150?text=NB+1" alt="NB 1">
-            <img src="https://via.placeholder.com/200x150?text=NB+2" alt="NB 2">
-            <img src="https://via.placeholder.com/200x150?text=NB+3" alt="NB 3">
-        </div>
-    </div>
+  <script>
+    function showBrand(brandId) {
+      document.querySelectorAll('.brand').forEach(div => {
+        div.classList.remove('visible');
+      });
+      document.getElementById(brandId).classList.add('visible');
+    }
+  </script>
 
-    <!-- Script per mostrar i ocultar seccions -->
-    <script>
-      function showSection(id) {
-        // Ocultar totes les seccions
-        document.querySelectorAll('.section').forEach(s => {
-            s.classList.remove('active');
-        });
-
-        // Mostrar la secció seleccionada
-        document.getElementById(id).classList.add('active');
-      }
-    </script>
-  </body>
+</body>
 </html>

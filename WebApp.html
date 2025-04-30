@@ -1,80 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css">
+
   <meta charset="UTF-8">
   <style>
-    body {
-      margin: 0;
-      background-color: #f9dcdc;
-      font-family: sans-serif;
-    }
-
-    .header {
-      background-color: #971018;
-      color: white;
-      padding: 20px;
-      font-size: 30px;
-    }
-
-    .brand-buttons {
-      margin: 20px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .brand-buttons button {
-      background-color: black;
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .brand-sections {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 30px;
-    }
-
-    .brand {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      background-color: #fce6e6;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 2px 2px 5px #ccc;
-    }
-
-    .brand img {
-      width: 200px;
-      margin-bottom: 10px;
-    }
-
-    .visible {
-      display: flex !important;
-    }
+   
   </style>
+   <link rel="stylesheet" href="index.css 2.0.css">
 </head>
 <body>
 
+  <div id="menu">      
+    <i id="boto_1" class="fa-solid fa-house"></i>    <!-- secció inicial -->     
+    <i id="boto_2" class="fa-solid fa-camera"></i>    <!-- càmera -->
+    <i id="boto_3" class="fa-solid fa-image"></i>     <!-- galeria -->
+    <i id="boto_4" class="fa-solid fa-map"></i>    <!-- mapa -->
+    <i class="fa-solid fa-right-from-bracket"></i>    <!-- tancar sessió -->
+  </div>
+  
   <div class="header">Bambaland</div>
 
   <div class="brand-buttons">
-    <button onclick="showBrand('nike')">Nike</button>
-    <button onclick="showBrand('adidas')">Adidas</button>
-    <button onclick="showBrand('puma')">Puma</button>
-    <button onclick="showBrand('nb')">New Balance</button>
+    <button onclick="showBrand('Nike.html')">Nike</button>
+    <button onclick="showBrand('Adidas')">Adidas</button>
+    <button onclick="showBrand('Puma')">Puma</button>
+    <button onclick="showBrand('NewBalance')">New Balance</button>
   </div>
 
-  <div class="brand-sections">
-    <div id="nike" class="brand">
-      <img src="nike1.jpg" alt="Nike 1">
-      <div>Nike 1</div>
-      <img src="nike2.jpg" alt="Nike 2">
-      <div>Nike 2</div>
-    </div>
+  <div id="Nike" class="brand">
+    <img src="air force 1" alt="Adidas force 1">
+    <div>Adidas 1</div>
+  </div>
+
 
     <div id="adidas" class="brand">
       <img src="adidas1.jpg" alt="Adidas 1">

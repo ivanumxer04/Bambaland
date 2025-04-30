@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+   
+  </style>
+   <link rel="stylesheet" href="index.css 2.0.css">
+</head>
+<body>
+
+  <div class="brand-sections">
+    <div id="nike" class="brand">
+      <img src="nike1.jpg" alt="Nike 1">
+      <div>Nike 1</div>
+      <img src="nike2.jpg" alt="Nike 2">
+      <div>Nike 2</div>
+    </div>
+  </div>
+  
+  <script>
+    function showBrand(brandId) {
+      document.querySelectorAll('.brand').forEach(div => {
+        div.classList.remove('visible');
+      });
+      document.getElementById(brandId).classList.add('visible');
+    }
+  </script>
+
+</body>
+</html>

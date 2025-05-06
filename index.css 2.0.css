@@ -35,25 +35,26 @@ body {
 
   .brand {
     display: none;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap; /* Permite que las imágenes se acomoden en filas */
+    justify-content: center; /* Centrado horizontal */
+    gap: 15px; /* Espacio entre imágenes */
     background-color: #fce6e6;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 2px 2px 5px #ccc;
   }
 
-  .brand img {
-    width: 200px;
-    margin-bottom: 10px;
-  }
+ .brand img {
+  width: 200px;
+  margin: 0;
+}
 
   #menu {
     display: flex;    /* el menú és un contenidor de tipus flex */
     height: 8vmax;
   }
   #menu i{
-    flex: 2;    /* cada botó pretén ocupar tot l'espai disponible */
+    flex: 1;    /* cada botó pretén ocupar tot l'espai disponible */
     display: flex;    /* contenidor flex on centrar-hi la icona */
     justify-content: center;
     align-items: center;

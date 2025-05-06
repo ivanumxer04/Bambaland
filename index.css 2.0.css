@@ -35,9 +35,9 @@ body {
 
   .brand {
     display: none;
-    flex-wrap: wrap; /* Permite que las imágenes se acomoden en filas */
-    justify-content: center; /* Centrado horizontal */
-    gap: 15px; /* Espacio entre imágenes */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
     background-color: #fce6e6;
     padding: 15px;
     border-radius: 10px;
@@ -67,4 +67,23 @@ body {
 
   .visible {
     display: flex !important;
+  }
+  .product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .product img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product p {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #000;
+    text-align: center;
   }

@@ -12,7 +12,27 @@
    <link rel="stylesheet" href="index.css 2.0.css">
 </head>
 <body>
-  
+
+  </div>
+  <!-- Secció d'inici de sessió -->
+  <div id="seccio_0" class="seccio">
+    <h2>Inici de sessió</h2>
+
+    <div id="credencials">
+      <div>
+        <label for="nom_usuari">Nom d'usuari</label>
+        <input type="text" id="nom_usuari" name="nom_usuari">
+      </div>
+      <div>
+        <label for="contrasenya">Contrasenya</label>
+        <input type="password" id="contrasenya" name="contrasenya">
+      </div>
+    </div>
+
+    <div id="botons_sessio">
+      <button>Inicia sessió</button>
+      <button>Nou usuari</button>
+    </div>
   </div>
 
   <div class="header">Bambaland</div>
@@ -95,56 +115,7 @@
       });
       document.getElementById(brandId).classList.add('visible');
     }
-     // Iniciar sesión
-  function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-    const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    const user = savedUsers.find(u => u.username === username && u.password === password);
-
-    if (user) {
-      document.getElementById("loginScreen").classList.add("hidden");
-      document.getElementById("mainContent").classList.remove("hidden");
-    } else {
-      alert("Usuari o contrasenya incorrecte.");
-    }
-  }
-
-  // Mostrar pantalla de registre
-  function showRegister() {
-    document.getElementById("loginScreen").classList.add("hidden");
-    document.getElementById("registerScreen").classList.remove("hidden");
-  }
-
-  // Tornar a la pantalla d'inici de sessió
-  function backToLogin() {
-    document.getElementById("registerScreen").classList.add("hidden");
-    document.getElementById("loginScreen").classList.remove("hidden");
-  }
-
-  // Crear usuari nou
-  function register() {
-    const username = document.getElementById("newUsername").value.trim();
-    const password = document.getElementById("newPassword").value;
-    if (!username || !password) {
-      alert("Omple tots els camps.");
-      return;
-    }
-
-    const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    if (savedUsers.find(u => u.username === username)) {
-      alert("Aquest nom d'usuari ja existeix.");
-      return;
-    }
-
-    savedUsers.push({ username, password });
-    localStorage.setItem("users", JSON.stringify(savedUsers));
-    alert("Usuari registrat correctament!");
-
-    backToLogin();
-  }
-</script>
+    
   </script>
 
 </body>

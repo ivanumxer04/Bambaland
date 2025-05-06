@@ -53,7 +53,7 @@ body {
     height: 8vmax;
   }
   #menu i{
-    flex: 1;    /* cada botó pretén ocupar tot l'espai disponible */
+    flex: 2;    /* cada botó pretén ocupar tot l'espai disponible */
     display: flex;    /* contenidor flex on centrar-hi la icona */
     justify-content: center;
     align-items: center;

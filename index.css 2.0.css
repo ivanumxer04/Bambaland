@@ -35,7 +35,7 @@ body {
 
   .brand {
     display: none;
-    flex-wrap: wrap;
+    flex-direction: wrap;
     align-items: center;
     background-color: #fce6e6;
     padding: 15px;

@@ -35,7 +35,7 @@ body {
 
   .brand {
     display: none;
-    flex-direction: column;
+    flex-direction: wrap;
     align-items: center;
     background-color: #fce6e6;
     padding: 15px;
@@ -47,7 +47,7 @@ body {
     width: 200px;
     margin-bottom: 10px;
   }
-  
+
 
   .visible {
     display: flex !important;

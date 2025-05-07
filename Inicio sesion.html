@@ -15,6 +15,7 @@
   <div id="login-section">
     <h2>Inicia Sessió</h2>
     <input type="text" id="username" placeholder="Nom d'usuari"><br>
+    <input type="password" id="password" placeholder="Contrasenya"><br>
     <button onclick="login()">Entrar</button>
     <p>No tens un compte? <a href="#" onclick="showRegister()">Crear usuari</a></p>
     <p id="login-error" style="color:red;"></p>
@@ -24,6 +25,7 @@
   <div id="register-section" class="hidden">
     <h2>Crear Usuari</h2>
     <input type="text" id="new-username" placeholder="Nom d'usuari nou"><br>
+    <input type="password" id="new-password" placeholder="Contrasenya"><br>
     <button onclick="register()">Registrar</button>
     <button onclick="showLogin()">Tornar</button>
     <p id="register-error" style="color:red;"></p>
@@ -41,16 +43,21 @@
 
     function login() {
       const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
       const error = document.getElementById("login-error");
-      if (registeredUsers.includes(username)) {
+
+      // Comprovar si l'usuari existeix i la contrasenya és correcta
+      const user = registeredUsers.find(u => u.username === username && u.password === password);
+
+      if (user) {
         document.getElementById("login-section").classList.add("hidden");
         document.getElementById("protected-section").classList.remove("hidden");
         document.getElementById("user-display").textContent = username;
         error.textContent = "";
-        //  Redirecció a home.html
+        // Redirecció a home.html
         window.location.href = "WebApp.html";
       } else {
-        error.textContent = "Usuari no registrat.";
+        error.textContent = "Usuari o contrasenya incorrectes.";
       }
     }
 
@@ -67,17 +74,20 @@
 
     function register() {
       const newUser = document.getElementById("new-username").value.trim();
+      const newPass = document.getElementById("new-password").value;
       const error = document.getElementById("register-error");
 
-      if (!newUser) {
-        error.textContent = "Introdueix un nom d'usuari vàlid.";
+      if (!newUser || !newPass) {
+        error.textContent = "Introdueix un nom d'usuari i una contrasenya vàlids.";
         return;
       }
 
-      if (registeredUsers.includes(newUser)) {
+      // Comprovar si l'usuari ja existeix
+      if (registeredUsers.find(u => u.username === newUser)) {
         error.textContent = "Aquest usuari ja existeix.";
       } else {
-        registeredUsers.push(newUser);
+        // Afegir l'usuari amb la contrasenya a la llista
+        registeredUsers.push({ username: newUser, password: newPass });
         error.textContent = "";
         alert("Usuari creat correctament! Torna a iniciar sessió.");
         showLogin();

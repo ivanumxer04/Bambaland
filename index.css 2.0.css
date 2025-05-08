@@ -75,7 +75,7 @@ body {
     font-size: 3vmax;
 }
 #botons_sessio {
-    display: column;
+    display: flex;
     align-items: center;
 }
 #botons_sessio button {    /* els 2 botons dins de botons_sessio */

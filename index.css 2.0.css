@@ -1,85 +1,90 @@
-
 body {
-    margin: 0;
-    background-color: #f9dcdc;
-    font-family: sans-serif;
-  }
-
-  .header {
-    background-color: #971018;
-    color: white;
-    padding: 20px;
-    font-size: 30px;
-  }
-
-  .brand-buttons {
-    margin: 20px;
-    display: flex;
-    gap: 10px;
-  }
-
-  .brand-buttons button {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-
-  .brand-sections {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 30px;
-  }
-
-  .brand {
-    display: none;
-    flex-direction: wrap;
-    align-items: center;
-    background-color: #fce6e6;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px #ccc;
-  }
-
-  .brand img {
-    width: 200px;
-    margin-bottom: 10px;
-  }
-
-
-  .visible {
-    display: flex !important;
-  }
-  
-  #seccio_0 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 4vmax;
+  margin: 0;
+  background-color: #f9dcdc;
+  font-family: sans-serif;
 }
+
+.header {
+  background-color: #971018;
+  color: white;
+  padding: 20px;
+  font-size: 30px;
+}
+
+.brand-buttons {
+  margin: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.brand-buttons button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.brand-sections {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.brand {
+  display: none; /* Ocultar las marcas por defecto */
+  background-color: #fce6e6;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px #ccc;
+  width: 220px; /* Ancho fijo para cada marca */
+  margin: 10px;
+}
+
+.brand img {
+  width: 100%; /* Las imágenes ocuparán todo el ancho disponible */
+  margin-bottom: 10px;
+}
+
+.visible {
+  display: grid !important; /* Cambié de flex a grid */
+  grid-template-columns: repeat(4, 1fr); /* Establece 4 columnas */
+  gap: 20px; /* Espaciado entre las imágenes */
+}
+
+#seccio_0 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 4vmax;
+}
+
 #credencials {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    font-size: 3vmax;
-    margin: 5vmin;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-size: 3vmax;
+  margin: 5vmin;
 }
-#credencials div {    /* els 2 <div> dins de credencials */
-    margin-bottom: 1vmin;
+
+#credencials div {    
+  margin-bottom: 1vmin;
 }
-#credencials input {    /* els 2 quadres de text dins de credencials */
-    max-width: 20vmax;    /* es limita l'espai que ocupen els quadres de text */
-    font-size: 3vmax;
+
+#credencials input {    
+  max-width: 20vmax;    
+  font-size: 3vmax;
 }
+
 #botons_sessio {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
-#botons_sessio button {    /* els 2 botons dins de botons_sessio */
-    font-size: 3vmax;
-    padding: 2vmin;
-    margin: 1vmin;
+
+#botons_sessio button {
+  font-size: 3vmax;
+  padding: 2vmin;
+  margin: 1vmin;
 }

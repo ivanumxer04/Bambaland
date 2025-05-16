@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <meta charset="UTF-8">
+  <body></body>
+  <script>
+
+// Número aleatori entre 1 i 100
+const numeroSecret = Math.floor(Math.random() * 100) + 1;
+let intents = 0;
+const maxIntents = 10;
+let encertat = false;
+
+while (intents < maxIntents && !encertat) {
+  const entrada = prompt("Introdueix el teu número (entre 1 i 100):");
+  const numeroUsuari = Number(entrada);
+
+  if (isNaN(numeroUsuari) || numeroUsuari < 1 || numeroUsuari > 100) {
+    alert("Has d'introduir un número vàlid entre 1 i 100.");
+    continue;
+  }
+
+  intents++;
+
+  if (numeroUsuari === numeroSecret) {
+    alert(`Enhorabona! Has encertat el número en ${intents} intents.`);
+    encertat = true;
+  } else if (numeroUsuari < numeroSecret) {
+    alert("El número és més gran.");
+  } else {
+    alert("El número és més petit.");
+  }
+}
+
+if (!encertat) {
+  alert(`Ho sento! Has superat el nombre màxim d'intents. El número era ${numeroSecret}.`);
+}
+
+
+      </script>
+  <body></body>

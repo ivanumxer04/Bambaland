@@ -1,84 +1,95 @@
-mirame lo de problema 3 con el css si ves que los esta ocultando:
 body {
-margin: 0;
-font-family: sans-serif;    /* un tipus de lletra adient per a llocs web */
-background-color: #FCDEE0;    /* color de fons en format #RRGGBB */
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #FCDEE0;
 }
 
 .header {
-background-color: #971018;
-color: white;
-padding: 20px;
-font-size: 30px;
+    background-color: #971018;
+    color: white;
+    padding: 20px;
+    font-size: 30px;
 }
 
 .brand-buttons {
-margin: 20px;
-display: flex;
-gap: 10px;
+    margin: 20px;
+    display: flex;
+    gap: 10px;
 }
 
 .brand-buttons button {
-background-color: black;
-color: white;
-border: none;
-padding: 10px;
-cursor: pointer;
-border-radius: 5px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 .brand-sections {
-display: flex;
-justify-content: space-around;
-margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    flex-wrap: wrap; /* <-- por si hay muchas marcas */
 }
 
 .brand {
-display: none;
-flex-direction: wrap;
-align-items: center;
-background-color: #fce6e6;
-padding: 15px;
-border-radius: 10px;
-box-shadow: 2px 2px 5px #ccc;
+    display: none;
+    flex-wrap: wrap; /* <-- CORREGIDO: permite que los hijos bajen de línea */
+    justify-content: center;
+    gap: 20px;
+    background-color: #fce6e6;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #ccc;
 }
 
 .brand img {
-width: 200px;
-margin-bottom: 10px;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.brand p {
+    text-align: center;
+    max-width: 200px;
 }
 
 .visible {
-display: flex !important;
+    display: flex !important;
 }
 
-\#seccio\_0 {
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-font-size: 4vmax;
+#seccio_0 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 4vmax;
 }
-\#credencials {
-display: flex;
-flex-direction: column;
-text-align: right;
-font-size: 3vmax;
-margin: 5vmin;
+
+#credencials {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    font-size: 3vmax;
+    margin: 5vmin;
 }
-\#credencials div {    /\* els 2 <div> dins de credencials */
-margin-bottom: 1vmin;
+
+#credencials div {
+    margin-bottom: 1vmin;
 }
-\#credencials input {    /* els 2 quadres de text dins de credencials */
-max-width: 20vmax;    /* es limita l'espai que ocupen els quadres de text */
-font-size: 3vmax;
+
+#credencials input {
+    max-width: 20vmax;
+    font-size: 3vmax;
 }
-\#botons\_sessio {
-display: flex;
-align-items: center;
+
+#botons_sessio {
+    display: flex;
+    align-items: center;
 }
-\#botons\_sessio button {    /* els 2 botons dins de botons\_sessio \*/
-font-size: 3vmax;
-padding: 2vmin;
-margin: 1vmin;
+
+#botons_sessio button {
+    font-size: 3vmax;
+    padding: 2vmin;
+    margin: 1vmin;
 }

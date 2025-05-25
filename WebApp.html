@@ -239,11 +239,18 @@
   </div>
 
   <script>
+   //<!-- ===== showBrand: toggle and collapse on second click ===== -->
     function showBrand(brandId) {
-      document.querySelectorAll('.brand').forEach(div => div.classList.remove('visible'));
-      document.getElementById(brandId).classList.add('visible');
+      const brand = document.getElementById(brandId);
+      if (brand.classList.contains('visible')) {
+        brand.classList.remove('visible');
+      } else {
+        document.querySelectorAll('.brand').forEach(div => div.classList.remove('visible'));
+        brand.classList.add('visible');
+      }
     }
-    // Cart functionality
+
+    //<!-- ===== addToCart: añade item al carrito ===== -->
     function addToCart(button) {
       const product = button.closest('.producte');
       const imgSrc = product.querySelector('img').src;
@@ -259,7 +266,7 @@
       item.appendChild(img);
 
       const info = document.createElement('span');
-      info.textContent = name + ' (' + priceText + ')';
+      info.textContent = `${name} (${priceText})`;
       item.appendChild(info);
 
       const removeBtn = document.createElement('button');
@@ -268,16 +275,17 @@
       item.appendChild(removeBtn);
 
       cartItems.appendChild(item);
-      // Ensure cart is visible when item added
       document.getElementById('cart').style.display = 'block';
     }
+
+    // <!-- ===== toggleCart: muestra/oculta carrito ===== -->
     function toggleCart() {
       const cart = document.getElementById('cart');
       cart.style.display = cart.style.display === 'none' ? 'block' : 'none';
     }
-    // Show Nike by default
-    window.onload = () => showBrand('Nike');
+
+    // No section visible on load
+    window.onload = () => {};
   </script>
 </body>
 </html>
-

@@ -6,6 +6,7 @@
   <title>Bambaland</title>
   <link rel="stylesheet" href="index.css">
   <style>
+    /* ===== Estilos Globales ===== */
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
     .header { background: #333; color: #fff; padding: 1rem; text-align: center; font-size: 1.5rem; }
     .brand-buttons { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem; }
@@ -13,10 +14,27 @@
     .brand { display: none; padding: 1rem; }
     .brand.visible { display: block; }
     .producte-container { display: flex; flex-wrap: wrap; gap: 1rem; }
-    .producte { border: 1px solid #ccc; padding: 0.5rem; width: 150px; text-align: center; }
+    .producte { border: 1px solid #ccc; padding: 0.5rem; width: 150px; text-align: center; cursor: pointer; }
     .producte img { width: 100%; height: auto; }
-    #Puma p { font-weight: normal; }
-    #Puma h2 { font-weight: normal; }
+
+    /* ===== Modal Detalle ===== */
+    #detail-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+    #detail-modal .modal-content { background: #fff; padding: 1rem; width: 90%; max-width: 800px; max-height: 90%; overflow-y: auto; position: relative; }
+    #detail-modal .close-btn { position: absolute; top: 1rem; right: 1rem; cursor: pointer; font-size: 1.2rem; }
+    .gallery { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .gallery img { width: 80px; height: auto; cursor: pointer; border: 1px solid #ccc; }
+    .gallery img.active { border: 2px solid #333; }
+    .main-img { width: 100%; max-height: 400px; object-fit: contain; margin-bottom: 1rem; }
+    .sizes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .size { padding: 0.5rem; border: 1px solid #ccc; cursor: pointer; }
+    .size.selected { background: #333; color: #fff; }
+    /* ===== Recomendaciones ===== */
+    .recommendations { margin-top: 2rem; }
+    .recommendations h3 { margin-bottom: 0.5rem; }
+    .rec-container { display: flex; gap: 1rem; overflow-x: auto; }
+    .rec-item { width: 120px; text-align: center; cursor: pointer; }
+    .rec-item img { width: 100%; }
+
     /* Cart styles */
     #cart-button { position: fixed; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; background: #fff; border: none; }
     #cart { position: fixed; top: 3rem; right: 1rem; width: 200px; max-height: 300px; overflow-y: auto; background: #fafafa; border: 1px solid #ccc; display: none; }
@@ -170,6 +188,18 @@
         <p>Preu: 100€</p>
         <button onclick="addToCart(this)">Añadir al carrito</button>
       </div>
+      <div class="producte">
+        <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_500,h_500/global/399064/08/sv01/fnd/EEA/fmt/png/Zapatillas-X-Ray-3-unisex" alt="X-Ray 3 Blanco">
+        <p>Puma X-Ray 3 Blanco</p>
+        <p>Preu: 75€</p>
+        <button onclick="addToCart(this)">Añadir al carrito</button>
+      </div>
+      <div class="producte">
+        <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_500,h_500/global/399064/10/sv01/fnd/EEA/fmt/png/Zapatillas-X-Ray-3-unisex" alt="X-Ray 3 Negro">
+        <p>Puma X-Ray 3 Negro</p>
+        <p>Preu: 75€</p>
+        <button onclick="addToCart(this)">Añadir al carrito</button>
+      </div>
     </div>
   </div>
 
@@ -225,18 +255,6 @@
         <p>Preu: 85€</p>
         <button onclick="addToCart(this)">Añadir al carrito</button>
       </div>
-      <div class="producte">
-        <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/375856/01/sv01/fnd/PNA/fmt/png/x-ray-3-blanco.png" alt="X-Ray 3 Blanco">
-        <p>X-Ray 3 Blanco</p>
-        <p>Preu: 75€</p>
-        <button onclick="addToCart(this)">Añadir al carrito</button>
-      </div>
-      <div class="producte">
-        <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_500,h_500/global/399064/10/sv01/fnd/EEA/fmt/png/Zapatillas-X-Ray-3-unisex" alt="X-Ray 3 Negro">
-        <p>X-Ray 3 Negro</p>
-        <p>Preu: 75€</p>
-        <button onclick="addToCart(this)">Añadir al carrito</button>
-      </div>
     </div>
   </div>
 
@@ -245,6 +263,24 @@
     <h2>Asics</h2>
     <p>Próximamente...</p>
   </div>
+    <!-- Modal Detalle Producto -->
+    <div id="detail-modal" onclick="if(event.target===this) closeModal();">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">✕</span>
+        <img class="main-img" src="" alt="Detalle">
+        <div class="gallery"></div>
+        <h2 class="detail-name"></h2>
+        <p class="detail-price"></p>
+        <p class="detail-desc">Descripción detallada del producto.</p>
+        <h4>Elige tu talla:</h4>
+        <div class="sizes"></div>
+        <button id="buy-now">Añadir al carrito</button>
+        <div class="recommendations">
+          <h3>También te puede gustar</h3>
+          <div class="rec-container"></div>
+        </div>
+      </div>
+    </div>
 
   <!-- Cart UI -->
   <button id="cart-button" onclick="toggleCart()">🛒</button>

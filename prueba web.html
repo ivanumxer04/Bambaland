@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bambaland</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+    /* ===== Estilos Globales ===== */
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .header { background: #333; color: #fff; padding: 1rem; text-align: center; font-size: 1.5rem; }
+    .brand-buttons { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem; }
+    .brand-buttons button { padding: 0.5rem 1rem; cursor: pointer; }
+    .brand { display: none; padding: 1rem; }
+    .brand.visible { display: block; }
+    .producte-container { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .producte { border: 1px solid #ccc; padding: 0.5rem; width: 150px; text-align: center; cursor: pointer; }
+    .producte img { width: 100%; height: auto; }
+
+    /* ===== Modal Detalle ===== */
+    #detail-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+    #detail-modal .modal-content { background: #fff; padding: 1rem; width: 90%; max-width: 800px; max-height: 90%; overflow-y: auto; position: relative; }
+    #detail-modal .close-btn { position: absolute; top: 1rem; right: 1rem; cursor: pointer; font-size: 1.2rem; }
+    .gallery { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .gallery img { width: 80px; height: auto; cursor: pointer; border: 1px solid #ccc; }
+    .gallery img.active { border: 2px solid #333; }
+    .main-img { width: 100%; max-height: 400px; object-fit: contain; margin-bottom: 1rem; }
+    .sizes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .size { padding: 0.5rem; border: 1px solid #ccc; cursor: pointer; }
+    .size.selected { background: #333; color: #fff; }
+
+    /* ===== Recomendaciones ===== */
+    .recommendations { margin-top: 2rem; }
+    .recommendations h3 { margin-bottom: 0.5rem; }
+    .rec-container { display: flex; gap: 1rem; overflow-x: auto; }
+    .rec-item { width: 120px; text-align: center; cursor: pointer; }
+    .rec-item img { width: 100%; }
+
+    /* Estilos Carrito */
+    #cart-button { position: fixed; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; background: #fff; border: none; }
+    #cart { position: fixed; top: 3rem; right: 1rem; width: 200px; max-height: 300px; overflow-y: auto; background: #fafafa; border: 1px solid #ccc; display: none; }
+    #cart .cart-header { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #eee; }
+    #cart .cart-items { padding: 0.5rem; }
+    .cart-item { display: flex; align-items: center; margin-bottom: 0.5rem; }
+    .cart-item img { width: 30px; height: auto; margin-right: 0.5rem; }
+    .cart-item button { margin-left: auto; background: none; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="header">Bambaland</div>
+  <div class="brand-buttons">
+    <button onclick="showBrand('Nike')">Nike</button>
+    <button onclick="showBrand('Adidas')">Adidas</button>
+    <button onclick="showBrand('Puma')">Puma</button>
+    <button onclick="showBrand('NewBalance')">New Balance</button>
+    <button onclick="showBrand('Asics')">Asics</button>
+  </div>
+
+  <!-- Secciones de Marca -->
+  <div id="Nike" class="brand">
+    <h2>Nike</h2>
+    <div class="producte-container">
+      <!-- Ejemplo Jordan 3 -->
+      <div class="producte" data-name="Jordan 3 Retro" data-price="170€" data-desc="Zapatilla clásica retro en colores originales." data-images='["https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-3-retro.png"]' data-sizes='["36","37","38","39","40","41","42","43"]'>
+        <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-3-retro.png" alt="Jordan 3 Retro">
+        <p>Jordan 3 Retro</p>
+        <p>170€</p>
+      </div>
+      <!-- Ejemplo Jordan 4 -->
+      <div class="producte" data-name="Jordan 4 Retro" data-price="180€" data-desc="Edición retro con detalles en malla y piel." data-images='["https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-4-retro.png"]' data-sizes='["36","37","38","39","40","41","42","43"]'>
+        <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-4-retro.png" alt="Jordan 4 Retro">
+        <p>Jordan 4 Retro</p>
+        <p>180€</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Detalle Producto -->
+  <div id="detail-modal" onclick="if(event.target===this) closeModal();">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">✕</span>
+      <img class="main-img" src="" alt="Detalle">
+      <div class="gallery"></div>
+      <h2 class="detail-name"></h2>
+      <p class="detail-price"></p>
+      <p class="detail-desc"></p>
+      <h4>Elige tu talla:</h4>
+      <div class="sizes"></div>
+      <button id="buy-now">Añadir al carrito</button>
+      <div class="recommendations">
+        <h3>También te puede gustar</h3>
+        <div class="rec-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carrito -->
+  <button id="cart-button" onclick="toggleCart()">🛒</button>
+  <div id="cart">
+    <div class="cart-header">
+      <span>Carrito</span>
+      <button onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items"></div>
+  </div>
+
+  <script>
+    // Mostrar/ocultar secciones
+    function showBrand(id) {
+      document.querySelectorAll('.brand').forEach(b => b.classList.remove('visible'));
+      document.getElementById(id).classList.toggle('visible');
+    }
+
+    // Abrir modal con datos del producto
+    function openModal(prod) {
+      const modal = document.getElementById('detail-modal');
+      modal.style.display = 'flex';
+      document.querySelector('.main-img').src = prod.images[0];
+      const gal = document.querySelector('.gallery'); gal.innerHTML = '';
+      prod.images.forEach((src,i) => {
+        const img = document.createElement('img'); img.src = src;
+        if(i===0) img.classList.add('active');
+        img.onclick = () => {
+          document.querySelector('.main-img').src = src;
+          gal.querySelectorAll('img').forEach(im=>im.classList.remove('active'));
+          img.classList.add('active');
+        };
+        gal.appendChild(img);
+      });
+      document.querySelector('.detail-name').textContent = prod.name;
+      document.querySelector('.detail-price').textContent = prod.price;
+      document.querySelector('.detail-desc').textContent = prod.desc;
+      const sizesDiv = document.querySelector('.sizes'); sizesDiv.innerHTML = '';
+      prod.sizes.forEach(sz => {
+        const btn = document.createElement('div'); btn.className='size'; btn.textContent = sz;
+        btn.onclick = () => {
+          sizesDiv.querySelectorAll('.size').forEach(s=>s.classList.remove('selected'));
+          btn.classList.add('selected');
+        };
+        sizesDiv.appendChild(btn);
+      });
+      // Recomendaciones aleatorias
+      const recCont = document.querySelector('.rec-container'); recCont.innerHTML='';
+      const all = Array.from(document.querySelectorAll('.producte'));
+      const randoms = all.sort(()=>0.5-Math.random()).slice(0,4);
+      randoms.forEach(el=>{
+        const img = el.querySelector('img').src;
+        const nm = el.dataset.name;
+        const div = document.createElement('div'); div.className='rec-item';
+        div.innerHTML = `<img src='${img}'><p>${nm}</p>`;
+        div.onclick = () => openModal({ images: JSON.parse(el.dataset.images), name: el.dataset.name, price: el.dataset.price, sizes: JSON.parse(el.dataset.sizes), desc: el.dataset.desc });
+        recCont.appendChild(div);
+      });
+    }
+
+    function closeModal() { document.getElementById('detail-modal').style.display = 'none'; }
+
+    // Asignar evento click a cada producto
+    document.querySelectorAll('.producte').forEach(el => {
+      el.onclick = () => openModal({ images: JSON.parse(el.dataset.images), name: el.dataset.name, price: el.dataset.price, sizes: JSON.parse(el.dataset.sizes), desc: el.dataset.desc });
+    });
+
+    // Añadir al carrito desde modal
+    document.getElementById('buy-now').onclick = () => {
+      const selected = document.querySelector('.size.selected');
+      if (!selected) return alert('Elige una talla');
+      const cartItems = document.querySelector('#cart .cart-items');
+      const item = document.createElement('div'); item.className = 'cart-item';
+      const img = document.createElement('img'); img.src = document.querySelector('.main-img').src; item.appendChild(img);
+      const info = document.createElement('span');
+      info.textContent = `${document.querySelector('.detail-name').textContent} (${document.querySelector('.detail-price').textContent}) - Talla ${selected.textContent}`;
+      item.appendChild(info);
+      const removeBtn = document.createElement('button'); removeBtn.textContent = '✕'; removeBtn.onclick = () => item.remove(); item.appendChild(removeBtn);
+      cartItems.appendChild(item);
+      toggleCart(); closeModal();
+    };
+
+    function toggleCart() {
+      const cart = document.getElementById('cart');
+      cart.style.display = cart.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // No mostrar nada al inicio
+    window.onload = () => {};
+  </script>
+</body>
+</html>

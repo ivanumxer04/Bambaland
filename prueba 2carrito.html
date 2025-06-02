@@ -10,6 +10,7 @@
     .totales { background-color: #f9f9f9; }
     .verde { background-color: #28d163; color: white; padding: 10px; border: none; cursor: pointer; }
     .volver { background-color: #ccc; padding: 10px; border: none; cursor: pointer; margin-bottom: 10px; }
+    .eliminar { background: red; color: white; border: none; padding: 4px 8px; cursor: pointer; margin-left: 10px; }
   </style>
 </head>
 <body>
@@ -68,6 +69,11 @@
       renderCarrito();
     }
 
+    function eliminarProducto(index) {
+      carrito.splice(index, 1);
+      renderCarrito();
+    }
+
     function renderCarrito() {
       const contenedor = document.getElementById('lista-productos');
       contenedor.innerHTML = '';
@@ -78,6 +84,7 @@
             <span>${producto.precio.toFixed(2)} €</span>
             <input type="number" min="1" value="${producto.cantidad}" name="cantidad-${index}" id="cantidad-${index}">
             <span id="subtotal-${index}">${(producto.precio * producto.cantidad).toFixed(2)} €</span>
+            <button class="eliminar" onclick="eliminarProducto(${index})">✕</button>
           </div>
         `;
       });

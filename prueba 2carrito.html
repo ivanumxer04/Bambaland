@@ -23,8 +23,10 @@
   <div id="carrito" class="carrito" style="display: none;">
     <button class="volver" onclick="volverAComprar()">← Volver a comprar</button>
     <h2>Carrito</h2>
-    <div id="lista-productos"></div>
-    <button onclick="actualizarTotales()">Actualizar el carrito</button>
+    <form id="form-carrito" onsubmit="event.preventDefault(); actualizarTotales();">
+      <div id="lista-productos"></div>
+      <button type="submit">Actualizar el carrito</button>
+    </form>
 
     <div>
       <input type="text" id="cupon" placeholder="Código de cupón">
@@ -74,18 +76,19 @@
           <div class="producto">
             <span>${producto.nombre}</span>
             <span>${producto.precio.toFixed(2)} €</span>
-            <input type="number" min="1" value="${producto.cantidad}" id="cantidad-${index}">
-            <span>${(producto.precio * producto.cantidad).toFixed(2)} €</span>
+            <input type="number" min="1" value="${producto.cantidad}" name="cantidad-${index}" id="cantidad-${index}">
+            <span id="subtotal-${index}">${(producto.precio * producto.cantidad).toFixed(2)} €</span>
           </div>
         `;
       });
-      actualizarTotales();
+      calcularTotales();
     }
 
     function actualizarTotales() {
       carrito.forEach((producto, index) => {
         const nuevaCantidad = parseInt(document.getElementById(`cantidad-${index}`).value);
         producto.cantidad = isNaN(nuevaCantidad) || nuevaCantidad < 1 ? 1 : nuevaCantidad;
+        document.getElementById(`subtotal-${index}`).textContent = (producto.precio * producto.cantidad).toFixed(2) + ' €';
       });
       calcularTotales();
     }

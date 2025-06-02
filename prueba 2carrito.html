@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrito de Compras</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .producto { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .carrito, .totales { border: 1px solid #ccc; padding: 20px; margin-top: 20px; }
+    .totales { background-color: #f9f9f9; }
+    .verde { background-color: #28d163; color: white; padding: 10px; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Tienda de Camisetas</h1>
+  <div>
+    <button onclick="addToCart('Camiseta Atlético 24/25', 33.95)">Añadir Camiseta Atlético 24/25</button>
+    <button onclick="addToCart('Camiseta Chelsea 24/25', 33.95)">Añadir Camiseta Chelsea 24/25</button>
+    <button onclick="toggleCarrito()">🛒 Ver Carrito</button>
+  </div>
+
+  <div id="carrito" class="carrito" style="display: none;">
+    <h2>Carrito</h2>
+    <div id="lista-productos"></div>
+    <button onclick="actualizarTotales()">Actualizar el carrito</button>
+
+    <div>
+      <input type="text" id="cupon" placeholder="Código de cupón">
+      <button onclick="aplicarCupon()">Aplicar el cupón</button>
+    </div>
+
+    <div class="totales">
+      <p>Subtotal: <span id="subtotal">0.00</span> €</p>
+      <p>Envío gratuito</p>
+      <p>Enviar a <strong>Barcelona</strong></p>
+      <p>Total: <span id="total">0.00</span> €</p>
+      <button class="verde">Proceder al pago</button>
+    </div>
+    <p><strong>AVISO IMPORTANTE:</strong> ESTE PRODUCTO NO PERMITE DEVOLUCIÓN.</p>
+  </div>
+
+  <script>
+    let carrito = [];
+    let descuentoAplicado = false;
+
+    function toggleCarrito() {
+      document.getElementById('carrito').style.display = 'block';
+      renderCarrito();
+    }
+
+    function addToCart(nombre, precio) {
+      const productoExistente = carrito.find(p => p.nombre === nombre);
+      if (productoExistente) {
+        productoExistente.cantidad++;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1 });
+      }
+      renderCarrito();
+    }
+
+    function renderCarrito() {
+      const contenedor = document.getElementById('lista-productos');
+      contenedor.innerHTML = '';
+      carrito.forEach((producto, index) => {
+        contenedor.innerHTML += `
+          <div class="producto">
+            <span>${producto.nombre}</span>
+            <span>${producto.precio.toFixed(2)} €</span>
+            <input type="number" min="1" value="${producto.cantidad}" onchange="cambiarCantidad(${index}, this.value)">
+            <span>${(producto.precio * producto.cantidad).toFixed(2)} €</span>
+          </div>
+        `;
+      });
+      actualizarTotales();
+    }
+
+    function cambiarCantidad(index, valor) {
+      carrito[index].cantidad = parseInt(valor);
+    }
+
+    function actualizarTotales() {
+      let subtotal = carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
+      let total = descuentoAplicado ? subtotal * 0.9 : subtotal;
+      document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+      document.getElementById('total').textContent = total.toFixed(2);
+    }
+
+    function aplicarCupon() {
+      const codigo = document.getElementById('cupon').value;
+      if (codigo === 'Joseponmeun10') {
+        descuentoAplicado = true;
+        actualizarTotales();
+      } else {
+        alert('Cupón no válido');
+      }
+    }
+  </script>
+</body>
+</html>

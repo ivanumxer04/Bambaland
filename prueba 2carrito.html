@@ -5,21 +5,23 @@
   <title>Carrito de Compras</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
-    .producto { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .producto { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; }
     .carrito, .totales { border: 1px solid #ccc; padding: 20px; margin-top: 20px; }
     .totales { background-color: #f9f9f9; }
     .verde { background-color: #28d163; color: white; padding: 10px; border: none; cursor: pointer; }
+    .volver { background-color: #ccc; padding: 10px; border: none; cursor: pointer; margin-bottom: 10px; }
   </style>
 </head>
 <body>
   <h1>Tienda de Camisetas</h1>
-  <div>
+  <div id="inicio">
     <button onclick="addToCart('Camiseta Atlético 24/25', 33.95)">Añadir Camiseta Atlético 24/25</button>
     <button onclick="addToCart('Camiseta Chelsea 24/25', 33.95)">Añadir Camiseta Chelsea 24/25</button>
     <button onclick="toggleCarrito()">🛒 Ver Carrito</button>
   </div>
 
   <div id="carrito" class="carrito" style="display: none;">
+    <button class="volver" onclick="volverAComprar()">← Volver a comprar</button>
     <h2>Carrito</h2>
     <div id="lista-productos"></div>
     <button onclick="actualizarTotales()">Actualizar el carrito</button>
@@ -44,8 +46,14 @@
     let descuentoAplicado = false;
 
     function toggleCarrito() {
+      document.getElementById('inicio').style.display = 'none';
       document.getElementById('carrito').style.display = 'block';
       renderCarrito();
+    }
+
+    function volverAComprar() {
+      document.getElementById('carrito').style.display = 'none';
+      document.getElementById('inicio').style.display = 'block';
     }
 
     function addToCart(nombre, precio) {
@@ -66,7 +74,7 @@
           <div class="producto">
             <span>${producto.nombre}</span>
             <span>${producto.precio.toFixed(2)} €</span>
-            <input type="number" min="1" value="${producto.cantidad}" onchange="cambiarCantidad(${index}, this.value)">
+            <input type="number" min="1" value="${producto.cantidad}" id="cantidad-${index}">
             <span>${(producto.precio * producto.cantidad).toFixed(2)} €</span>
           </div>
         `;
@@ -74,11 +82,15 @@
       actualizarTotales();
     }
 
-    function cambiarCantidad(index, valor) {
-      carrito[index].cantidad = parseInt(valor);
+    function actualizarTotales() {
+      carrito.forEach((producto, index) => {
+        const nuevaCantidad = parseInt(document.getElementById(`cantidad-${index}`).value);
+        producto.cantidad = isNaN(nuevaCantidad) || nuevaCantidad < 1 ? 1 : nuevaCantidad;
+      });
+      calcularTotales();
     }
 
-    function actualizarTotales() {
+    function calcularTotales() {
       let subtotal = carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
       let total = descuentoAplicado ? subtotal * 0.9 : subtotal;
       document.getElementById('subtotal').textContent = subtotal.toFixed(2);
@@ -86,10 +98,10 @@
     }
 
     function aplicarCupon() {
-      const codigo = document.getElementById('cupon').value;
+      const codigo = document.getElementById('cupon').value.trim();
       if (codigo === 'Joseponmeun10') {
         descuentoAplicado = true;
-        actualizarTotales();
+        calcularTotales();
       } else {
         alert('Cupón no válido');
       }

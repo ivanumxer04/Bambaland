@@ -44,8 +44,8 @@
     .cart-item { display: flex; align-items: center; margin-bottom: 0.5rem; }
     .cart-item img { width: 30px; height: auto; margin-right: 0.5rem; }
     .cart-item button { margin-left: auto; background: none; border: none; cursor: pointer; }
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    
+
+
   </style>
 </head>
 <body>
@@ -246,6 +246,7 @@
       <h4>Elige tu talla:</h4>
       <div class="sizes"></div>
       <button id="buy-now">Añadir al carrito</button>
+      <a href="carrito.html">🛒 Ver Carrito</a>
       <div class="recommendations">
         <h3>También te puede gustar</h3>
         <div class="rec-container"></div>
@@ -264,6 +265,19 @@
   </div>
 
   <script>
+  function addToCart(nombre, precio, imagen) {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const productoExistente = carrito.find(p => p.nombre === nombre);
+    if (productoExistente) {
+      productoExistente.cantidad++;
+    } else {
+      carrito.push({ nombre, precio, cantidad: 1, imagen });
+    }
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    alert("Producto añadido al carrito");
+  }
+</script>
+
     // Mostrar/ocultar secciones
     function showBrand(id) {
       document.querySelectorAll('.brand').forEach(b => b.classList.remove('visible'));

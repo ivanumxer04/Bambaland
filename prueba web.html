@@ -44,6 +44,12 @@
     .cart-item { display: flex; align-items: center; margin-bottom: 0.5rem; }
     .cart-item img { width: 30px; height: auto; margin-right: 0.5rem; }
     .cart-item button { margin-left: auto; background: none; border: none; cursor: pointer; }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .producto { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; }
+    .carrito, .totales { border: 1px solid #ccc; padding: 20px; margin-top: 20px; }
+    .totales { background-color: #f9f9f9; }
+    .verde { background-color: #28d163; color: white; padding: 10px; border: none; cursor: pointer; }
+    .volver { background-color: #ccc; padding: 10px; border: none; cursor: pointer; margin-bottom: 10px; }
   </style>
 </head>
 <body>
@@ -260,6 +266,35 @@
     </div>
     <div class="cart-items"></div>
   </div>
+  <h1>Tienda de Camisetas</h1>
+  <div id="inicio">
+    <button onclick="addToCart('Camiseta Atlético 24/25', 33.95)">Añadir Camiseta Atlético 24/25</button>
+    <button onclick="addToCart('Camiseta Chelsea 24/25', 33.95)">Añadir Camiseta Chelsea 24/25</button>
+    <button onclick="toggleCarrito()">🛒 Ver Carrito</button>
+  </div>
+
+  <div id="carrito" class="carrito" style="display: none;">
+    <button class="volver" onclick="volverAComprar()">← Volver a comprar</button>
+    <h2>Carrito</h2>
+    <form id="form-carrito" onsubmit="event.preventDefault(); actualizarTotales();">
+      <div id="lista-productos"></div>
+      <button type="submit">Actualizar el carrito</button>
+    </form>
+
+    <div>
+      <input type="text" id="cupon" placeholder="Código de cupón">
+      <button onclick="aplicarCupon()">Aplicar el cupón</button>
+    </div>
+
+    <div class="totales">
+      <p>Subtotal: <span id="subtotal">0.00</span> €</p>
+      <p>Envío gratuito</p>
+      <p>Enviar a <strong>Barcelona</strong></p>
+      <p>Total: <span id="total">0.00</span> €</p>
+      <button class="verde">Proceder al pago</button>
+    </div>
+    <p><strong>AVISO IMPORTANTE:</strong> ESTE PRODUCTO NO PERMITE DEVOLUCIÓN.</p>
+  </div>
 
   <script>
     // Mostrar/ocultar secciones
@@ -339,6 +374,71 @@
 
     // No mostrar nada al inicio
     window.onload = () => {};
+    let carrito = [];
+    let descuentoAplicado = false;
+
+    function toggleCarrito() {
+      document.getElementById('inicio').style.display = 'none';
+      document.getElementById('carrito').style.display = 'block';
+      renderCarrito();
+    }
+
+    function volverAComprar() {
+      document.getElementById('carrito').style.display = 'none';
+      document.getElementById('inicio').style.display = 'block';
+    }
+
+    function addToCart(nombre, precio) {
+      const productoExistente = carrito.find(p => p.nombre === nombre);
+      if (productoExistente) {
+        productoExistente.cantidad++;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1 });
+      }
+      renderCarrito();
+    }
+
+    function renderCarrito() {
+      const contenedor = document.getElementById('lista-productos');
+      contenedor.innerHTML = '';
+      carrito.forEach((producto, index) => {
+        contenedor.innerHTML += `
+          <div class="producto">
+            <span>${producto.nombre}</span>
+            <span>${producto.precio.toFixed(2)} €</span>
+            <input type="number" min="1" value="${producto.cantidad}" name="cantidad-${index}" id="cantidad-${index}">
+            <span id="subtotal-${index}">${(producto.precio * producto.cantidad).toFixed(2)} €</span>
+          </div>
+        `;
+      });
+      calcularTotales();
+    }
+
+    function actualizarTotales() {
+      carrito.forEach((producto, index) => {
+        const nuevaCantidad = parseInt(document.getElementById(`cantidad-${index}`).value);
+        producto.cantidad = isNaN(nuevaCantidad) || nuevaCantidad < 1 ? 1 : nuevaCantidad;
+        document.getElementById(`subtotal-${index}`).textContent = (producto.precio * producto.cantidad).toFixed(2) + ' €';
+      });
+      calcularTotales();
+    }
+
+    function calcularTotales() {
+      let subtotal = carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
+      let total = descuentoAplicado ? subtotal * 0.9 : subtotal;
+      document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+      document.getElementById('total').textContent = total.toFixed(2);
+    }
+
+    function aplicarCupon() {
+      const codigo = document.getElementById('cupon').value.trim();
+      if (codigo === 'Joseponmeun10') {
+        descuentoAplicado = true;
+        calcularTotales();
+      } else {
+        alert('Cupón no válido');
+      }
+    }
   </script>
 </body>
 </html>

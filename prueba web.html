@@ -261,8 +261,36 @@
       <span>Carrito</span>
       <button onclick="toggleCart()">✕</button>
     </div>
-    <div class="cart-items"></div>
+    <div id="lista-productos-cart"></div>
+    <div class="totales">
+      <p>Subtotal: <span id="subtotal-cart">0.00</span> €</p>
+      <p>Total: <span id="total-cart">0.00</span> €</p>
+    </div>
   </div>
+
+  <div id="carrito" class="carrito">
+    <button class="volver" onclick="volverAComprar()">← Volver a comprar</button>
+    <h2>Carrito</h2>
+    <form id="form-carrito" onsubmit="event.preventDefault(); actualizarTotales();">
+      <div id="lista-productos"></div>
+      <button type="submit">Actualizar el carrito</button>
+    </form>
+
+    <div>
+      <input type="text" id="cupon" placeholder="Código de cupón">
+      <button onclick="aplicarCupon()">Aplicar el cupón</button>
+    </div>
+
+    <div class="totales">
+      <p>Subtotal: <span id="subtotal">0.00</span> €</p>
+      <p>Envío gratuito</p>
+      <p>Enviar a <strong>Barcelona</strong></p>
+      <p>Total: <span id="total">0.00</span> €</p>
+      <button class="verde">Proceder al pago</button>
+    </div>
+    <p><strong>AVISO IMPORTANTE:</strong> ESTE PRODUCTO NO PERMITE DEVOLUCIÓN.</p>
+  </div>
+
 
   <script>
   function addToCart(nombre, precio, imagen) {
@@ -333,24 +361,110 @@
     });
 
     // Añadir al carrito desde modal
-    document.getElementById('buy-now').onclick = () => {
-      const selected = document.querySelector('.size.selected');
-      if (!selected) return alert('Elige una talla');
-      const cartItems = document.querySelector('#cart .cart-items');
-      const item = document.createElement('div'); item.className = 'cart-item';
-      const img = document.createElement('img'); img.src = document.querySelector('.main-img').src; item.appendChild(img);
-      const info = document.createElement('span');
-      info.textContent = `${document.querySelector('.detail-name').textContent} (${document.querySelector('.detail-price').textContent}) - Talla ${selected.textContent}`;
-      item.appendChild(info);
-      const removeBtn = document.createElement('button'); removeBtn.textContent = '✕'; removeBtn.onclick = () => item.remove(); item.appendChild(removeBtn);
-      cartItems.appendChild(item);
-      toggleCart(); closeModal();
-    };
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let descuentoAplicado = false;
+
+    function volverAComprar() {
+      window.location.href = 'Pureba web.html';
+    }
+
+    function eliminarProducto(index) {
+      carrito.splice(index, 1);
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      renderCarrito();
+      renderCartPopup();
+    }
+
+    function renderCarrito() {
+      const contenedor = document.getElementById('lista-productos');
+      contenedor.innerHTML = '';
+      carrito.forEach((producto, index) => {
+        contenedor.innerHTML += `
+          <div class="producto">
+            <img src="${producto.imagen}" alt="${producto.nombre}" />
+            <span>${producto.nombre}</span>
+            <span>${producto.precio.toFixed(2)} €</span>
+            <input type="number" min="1" value="${producto.cantidad}" name="cantidad-${index}" id="cantidad-${index}">
+            <span id="subtotal-${index}">${(producto.precio * producto.cantidad).toFixed(2)} €</span>
+            <button class="eliminar" onclick="eliminarProducto(${index})">✕</button>
+          </div>
+        `;
+      });
+      calcularTotales();
+    }
+
+    function renderCartPopup() {
+      const contenedor = document.getElementById('lista-productos-cart');
+      contenedor.innerHTML = '';
+      carrito.forEach(producto => {
+        contenedor.innerHTML += `
+          <div class="producto">
+            <img src="${producto.imagen}" alt="${producto.nombre}" />
+            <span>${producto.nombre} x${producto.cantidad}</span>
+            <span>${(producto.precio * producto.cantidad).toFixed(2)} €</span>
+          </div>
+        `;
+      });
+      calcularPopupTotales();
+    }
+
+    function actualizarTotales() {
+      carrito.forEach((producto, index) => {
+        const nuevaCantidad = parseInt(document.getElementById(`cantidad-${index}`).value);
+        producto.cantidad = isNaN(nuevaCantidad) || nuevaCantidad < 1 ? 1 : nuevaCantidad;
+        document.getElementById(`subtotal-${index}`).textContent = (producto.precio * producto.cantidad).toFixed(2) + ' €';
+      });
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      calcularTotales();
+      renderCartPopup();
+    }
+
+    function calcularTotales() {
+      let subtotal = carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
+      let total = descuentoAplicado ? subtotal * 0.9 : subtotal;
+      document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+      document.getElementById('total').textContent = total.toFixed(2);
+    }
+
+    function calcularPopupTotales() {
+      let subtotal = carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
+      let total = descuentoAplicado ? subtotal * 0.9 : subtotal;
+      document.getElementById('subtotal-cart').textContent = subtotal.toFixed(2);
+      document.getElementById('total-cart').textContent = total.toFixed(2);
+    }
+
+    function aplicarCupon() {
+      const codigo = document.getElementById('cupon').value.trim();
+      if (codigo === 'Joseponmeun10') {
+        descuentoAplicado = true;
+        calcularTotales();
+        calcularPopupTotales();
+      } else {
+        alert('Cupón no válido');
+      }
+    }
 
     function toggleCart() {
-      const cart = document.getElementById('cart');
-      cart.style.display = cart.style.display === 'none' ? 'block' : 'none';
+      const cart = document.getElementById("cart");
+      cart.style.display = cart.style.display === "none" || cart.style.display === "" ? "block" : "none";
     }
+
+    function addToCart(nombre, precio, imagen) {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const productoExistente = carrito.find(p => p.nombre === nombre);
+      if (productoExistente) {
+        productoExistente.cantidad++;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1, imagen });
+      }
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      renderCarrito();
+      renderCartPopup();
+      alert("Producto añadido al carrito");
+    }
+
+    renderCarrito();
+    renderCartPopup();
 
     // No mostrar nada al inicio
     window.onload = () => {};

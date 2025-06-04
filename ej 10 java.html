@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Activitat 10</title>
+</head>
+<body>
+  <button onclick="activitat10()">Inicia interval</button>
+  <p id="parells"></p>
+  <p id="senars"></p>
+
+  <script>
+    function activitat10() {
+      let inici = parseInt(prompt("Introdueix l'inici de l'interval:"));
+      let fi = parseInt(prompt("Introdueix el final de l'interval:"));
+
+      let parells = "", senars = "";
+
+      for (let i = inici; i <= fi; i++) {
+        if (i % 2 === 0) parells += i + " ";
+        else senars += i + " ";
+      }
+
+      document.getElementById("parells").innerHTML = "Parells: " + parells;
+      document.getElementById("senars").innerHTML = "Senars: " + senars;
+    }
+  </script>
+</body>
+</html>

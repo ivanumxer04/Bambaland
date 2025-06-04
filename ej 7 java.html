@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Activitat 7</title>
+</head>
+<body>
+  <button onclick="activitat7()">Comença multiplicació</button>
+  <p id="resultat"></p>
+
+  <script>
+    function activitat7() {
+      let resultat = 1;
+      let sortir = false;
+      let output = "";
+
+      while (!sortir) {
+        let entrada = prompt("Introdueix un número (1 per acabar):");
+        let num = parseInt(entrada);
+        if (num === 1) {
+          sortir = true;
+          output += "Fi del programa";
+        } else {
+          resultat *= num;
+          output += "Resultat: " + resultat + "<br>";
+        }
+      }
+
+      document.getElementById("resultat").innerHTML = output;
+    }
+  </script>
+</body>
+</html>

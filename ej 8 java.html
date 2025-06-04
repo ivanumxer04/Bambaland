@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Activitat 8</title>
+</head>
+<body>
+  <button onclick="activitat8()">Comença activitat 8</button>
+  <p id="missatge"></p>
+
+  <script>
+    function activitat8() {
+      let missatge = "";
+
+      while (true) {
+        let entrada = prompt("Introdueix dos números separats per espai, o 'Surt' per sortir:");
+        if (!entrada || entrada.toLowerCase() === "surt") {
+          missatge = "Fi del programa.";
+          break;
+        }
+
+        let parts = entrada.split(" ");
+        if (parts.length === 2) {
+          let a = parseInt(parts[0]);
+          let b = parseInt(parts[1]);
+          if (a * b === 3 * (a + b)) {
+            missatge = `Correcte! ${a} i ${b} compleixen la condició.`;
+            break;
+          } else {
+            alert("No és correcte.");
+          }
+        } else {
+          alert("Entrada no vàlida.");
+        }
+      }
+
+      document.getElementById("missatge").innerHTML = missatge;
+    }
+  </script>
+</body>
+</html>

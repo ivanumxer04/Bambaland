@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Activitat 9</title>
+</head>
+<body>
+  <button onclick="activitat9()">Inicia control</button>
+  <p id="resum"></p>
+
+  <script>
+    function activitat9() {
+      let grups = [];
+      let entrada;
+
+      while (true) {
+        entrada = prompt("Introdueix el nombre de persones del grup (0 per acabar):");
+        let num = parseInt(entrada);
+        if (num === 0) break;
+        if (!isNaN(num)) grups.push(num);
+      }
+
+      let total = grups.reduce((a, b) => a + b, 0);
+      let max = Math.max(...grups);
+      let mitjana = total / grups.length;
+
+      let text = `
+        Nombre de grups: ${grups.length}<br>
+        Nombre total d’usuaris: ${total}<br>
+        Grup més gran: ${max}<br>
+        Mitjana de persones per grup: ${mitjana.toFixed(2)}
+      `;
+
+      document.getElementById("resum").innerHTML = text;
+    }
+  </script>
+</body>
+</html>

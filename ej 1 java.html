@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  </meta>function activitat1() {
+    let distancia = parseFloat(prompt("Introdueix la distància (km):"));
+    let velocitat = parseFloat(prompt("Introdueix la velocitat (km/h):"));
+    if (velocitat !== 0) {
+        let temps = distancia / velocitat;
+        alert(`El temps necessari és: ${temps.toFixed(2)} hores`);
+    } else {
+        alert("La velocitat no pot ser zero!");
+    }
+}

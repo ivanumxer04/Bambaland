@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Activitat 6</title>
+</head>
+<body>
+  <button onclick="activitat6_3()">Inicia activitat 6</button>
+
+  <script>
+    function comptar() {
+      let resultat = "";
+      for (let i = 1; i <= 10; i++) {
+        resultat += i + "<br>";
+      }
+      document.body.innerHTML += resultat;
+    }
+
+    function activitat6_3() {
+      const password = "secreta";
+      let pass = prompt("Escriu la contrasenya:");
+      while (pass !== password) {
+        pass = prompt("Contrasenya incorrecta. Torna-ho a provar:");
+      }
+
+      let operacio = prompt("Quant és 15 * 5?");
+      while (parseInt(operacio) !== 75) {
+        operacio = prompt("Operació incorrecta. Quant és 15 * 5?");
+      }
+
+      comptar();
+    }
+  </script>
+</body>
+</html>
